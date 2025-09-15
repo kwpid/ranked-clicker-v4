@@ -162,7 +162,7 @@ export function MainMenu() {
           <Button
             variant="outline"
             className="h-16 bg-gray-800 border-gray-600 hover:bg-gray-700"
-            disabled
+            onClick={() => setScreen("leaderboard")}
           >
             <div className="flex flex-col items-center gap-1">
               <Crown className="w-5 h-5" />

@@ -7,6 +7,7 @@ import { EndScreen } from "./components/game/EndScreen";
 import { SettingsMenu } from "./components/game/SettingsMenu";
 import { TitlesMenu } from "./components/game/TitlesMenu";
 import { StatsMenu } from "./components/game/StatsMenu";
+import { Leaderboard } from "./components/game/Leaderboard";
 import { useGameStore } from "./lib/stores/useGameStore";
 import { GameScreen as GameScreenType } from "./lib/types";
 import "@fontsource/inter";
@@ -36,6 +37,8 @@ function App() {
         return <TitlesMenu />;
       case "stats":
         return <StatsMenu />;
+      case "leaderboard":
+        return <Leaderboard />;
       default:
         return <MainMenu />;
     }

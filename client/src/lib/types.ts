@@ -6,7 +6,8 @@ export type GameScreen =
   | "end-screen" 
   | "settings" 
   | "titles" 
-  | "stats";
+  | "stats"
+  | "leaderboard";
 
 export type QueueType = "casual" | "ranked";
 
