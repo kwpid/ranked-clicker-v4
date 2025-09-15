@@ -1,0 +1,66 @@
+in html/css/js create a game called Ranked Clicker
+menu:
+- two main butttons: Casual Queue, Ranked Queue (locked, need level 5)
+- then each queue has 1v1,2v2 and 3v3.
+- buttosn for settings (allows user to change thier username)
+- button for titles
+- button for stats (all stats, including peak mmr)
+casual uses one mmr across all playlists, ranked uses seperate for each.
+plaeyrs start at 600 casual mmr, ranked will be basd off placement matches
+
+the main game system will have modifiers to help change game stuff for other events:
+- match time
+- max points 
+- best of (1,3,5,7)
+for casual / ranked, it will be:
+60 match time, no max points, best of 1
+
+game screen:
+- shows both red and blue team (player is assigned to random one, while ai join in after half a second - 2 seconds, they join witihn a randomt ime between that)
+- game message saying when an AI joined ("username joined the match")
+after a few seconds, it starts teh countdown (3 second countdown), then teh match starts
+end screen shows mmr changes, MMR for both casual and ranked go off an ELO caluclation, ensuring the player gets a fair amount of MMR based on the lobbies average mmr.
+- will also show the ai's mmr like [#] username
+
+queue screen:
+- queue screen shows the estimated wait time, the current time elasped, a button to cancel, and how mnay players are online
+- players online wont be shown, but it will be lower during low times of the day, higher during peak times. instead will have texts aying: "PLAYLIST POPULATION: [text]", it can be poor, bad, mid, good, or great. this is based off their rank / mmr 9higher = less players)
+
+ai:
+- clicks slower in lower ranks / mmr, higher = more consistent with your cps (either goes a bit slower or a bit faster, can switch between the two to ensure realistic clickng)
+- uses usernames from a list of them
+
+titles:
+- titels will be a cosmetic for users to collect:
+types: - XP, Ranked, Competitive
+XP will award you grey / regular titles, will be given based off getting to a certian level
+Ranked titles are rewarded as a Season Reward (see ranked for mroe info)
+Competitive titles are for pro-level players through tournanents (wip)
+players can equip either no title, or a title. titles show in the player card, and under the players usenrame in game. CSS affects (color/glow if available) will show in game too
+AI can also have titles, but competivie / ranked will work differnely
+- ranked rewards must state the current, or previous season, and the ai must be within the rank of the season reward.
+- also a custom title caleld "SINCE S#", which is awarded when the player goes on a site during any season (so if i get on site during season 1, i get the SINCE S1 title, but after season 1 ends, its no longer obtainble)
+Ranked:
+- a season lasts through a month, a new season starts at the start of each month (the first)
+- when a new season starts, the players ranks (all) get soft reset (like rocket league)< and they need to play 5 placement matches.
+- each rank has two divs: Main Div (I, II, III), and minor divs beween the main divs (Div I, II, III, IV, V)
+so i can be Diamond II, Div III, or Champion I, Div IV, etc
+Ranks:
+Bronze, Silver, Gold, Platinum, Diamond, Champion, Grand Champion (only rank with no divisions, just scales endlessly basically)
+Season Rewards:
+after placement matches, they can get season rewards. 10 wins is required for each season reward rank:
+so regardless of the players rank, after a new season they start at bronze season reward. Afer 10 wins, they get silver, then another 10 they get gold, up until their current rank, in which it locks until they rank up in any playlist, then they need another 10 wins for that ranks rewards
+wins are counted across all ranked playlists, not just 1v1 or 2v2, if i get 6 wins in 2v2, 4 wins in 1v1, thats still 10 ranked wins for season rewards
+at the top of the ranked page, will show the progress and current rank reward (as lines no proress bar)
+ranked titles:
+- once you reach season rewards for ranked, you are awarded a title:
+S# [rank]
+S# being the current season, the [rank[ being the rank reward, so if i get to silver rewards, i get S1 SILVER
+grand champion rank will have a golden glow (gold text color) and champion will have a purple tex with no glow, while the rest will be a grey color
+
+
+site design:
+- dark theme, modern but simple layout, to be appealing to allow users and not look ugly, have affects and consistent styling throughout
+
+data:
+- save it locally on the players device
