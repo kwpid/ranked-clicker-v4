@@ -80,11 +80,6 @@ export function Leaderboard() {
               <span className={`font-semibold ${isPlayer ? 'text-blue-400' : 'text-white'}`}>
                 {isPlayer ? `${player.username} (You)` : player.username}
               </span>
-              {player.title && (
-                <Badge variant="secondary" className="text-xs">
-                  {player.title}
-                </Badge>
-              )}
             </div>
             <div className={`text-sm font-semibold ${getRankColor(player.rank[activeTab].rank)}`}>
               {formatRank(player.rank[activeTab].rank, player.rank[activeTab].division)}

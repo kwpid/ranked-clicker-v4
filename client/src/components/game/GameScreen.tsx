@@ -51,6 +51,19 @@ export function GameScreen() {
     return () => document.removeEventListener('click', handleGlobalClick);
   }, [handleClick]);
 
+  // Add spacebar support for clicking during gameplay
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && gameState?.gamePhase === "playing") {
+        e.preventDefault(); // Prevent default spacebar behavior (scrolling)
+        handleClick();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleClick, gameState]);
+
   if (!gameState) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
