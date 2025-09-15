@@ -8,7 +8,7 @@ import { formatRank, getRankColor } from "@/lib/rankingSystem";
 import { useAudio } from "@/lib/stores/useAudio";
 
 export function GameScreen() {
-  const { gameState, updateGame } = useGameStore();
+  const { gameState, updateGame, playerData } = useGameStore();
   const { playHit } = useAudio();
   const [lastTime, setLastTime] = useState(Date.now());
 
@@ -151,7 +151,14 @@ export function GameScreen() {
                   ))}
                   {gameState.playerTeam === "red" && (
                     <div className="flex items-center justify-between text-sm font-bold border-t border-red-700 pt-1">
-                      <span className="text-red-100">You</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-100">You</span>
+                        {playerData.equippedTitle && (
+                          <Badge variant="secondary" className="text-xs">
+                            {playerData.equippedTitle}
+                          </Badge>
+                        )}
+                      </div>
                       <span className="text-red-100">{gameState.playerClicks} clicks</span>
                     </div>
                   )}
@@ -185,7 +192,14 @@ export function GameScreen() {
                   ))}
                   {gameState.playerTeam === "blue" && (
                     <div className="flex items-center justify-between text-sm font-bold border-t border-blue-700 pt-1">
-                      <span className="text-blue-100">You</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-blue-100">You</span>
+                        {playerData.equippedTitle && (
+                          <Badge variant="secondary" className="text-xs">
+                            {playerData.equippedTitle}
+                          </Badge>
+                        )}
+                      </div>
                       <span className="text-blue-100">{gameState.playerClicks} clicks</span>
                     </div>
                   )}
