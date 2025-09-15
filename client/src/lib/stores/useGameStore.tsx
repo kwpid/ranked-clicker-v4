@@ -104,7 +104,7 @@ export const useGameStore = create<GameStore>()(
       
       // Get current population
       const hour = new Date().getHours();
-      const populationText = POPULATION_TIMES[hour] || "mid";
+      const populationText = (POPULATION_TIMES as any)[hour] || "mid";
       
       // Calculate estimated wait time based on population and MMR
       const mmr = selectedQueueType === "casual" 
@@ -119,15 +119,16 @@ export const useGameStore = create<GameStore>()(
       else if (mmr > 1000) baseWaitTime += 10;
       
       // Population affects wait time
-      const populationMultiplier = {
+      const populationMultiplier: Record<string, number> = {
         poor: 2.5,
         bad: 2.0,
         mid: 1.5,
         good: 1.0,
         great: 0.7
-      }[populationText] || 1.0;
+      };
+      const multiplier = populationMultiplier[populationText] || 1.0;
       
-      const estimatedWaitTime = Math.round(baseWaitTime * populationMultiplier);
+      const estimatedWaitTime = Math.round(baseWaitTime * multiplier);
       
       set({
         queueState: {

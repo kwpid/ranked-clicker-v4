@@ -23,7 +23,16 @@ export function TitlesMenu() {
 
   // Generate all possible titles based on player data
   const generateTitles = () => {
-    const titles = [];
+    const titles: Array<{
+      id: string;
+      name: string;
+      type: 'XP' | 'Ranked' | 'Competitive';
+      description: string;
+      unlocked: boolean;
+      owned: boolean;
+      color: string;
+      glow: boolean;
+    }> = [];
 
     // XP Titles (based on level)
     const xpTitles = [
