@@ -117,8 +117,6 @@ export function TitlesMenu() {
 
   const titles = generateTitles();
   const ownedTitles = titles.filter(t => t.owned);
-  const unlockedTitles = titles.filter(t => t.unlocked && !t.owned);
-  const lockedTitles = titles.filter(t => !t.unlocked);
 
   const getTitleIcon = (type: string) => {
     switch (type) {
@@ -216,7 +214,7 @@ export function TitlesMenu() {
         </Card>
 
         {/* Owned Titles */}
-        {ownedTitles.length > 0 && (
+        {ownedTitles.length > 0 ? (
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-4">Your Titles ({ownedTitles.length})</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -225,30 +223,15 @@ export function TitlesMenu() {
               ))}
             </div>
           </div>
-        )}
-
-        {/* Available Titles */}
-        {unlockedTitles.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-white mb-4">Available to Unlock</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {unlockedTitles.map(title => (
-                <TitleCard key={title.id} title={title} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Locked Titles */}
-        {lockedTitles.length > 0 && (
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-4">Locked Titles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {lockedTitles.map(title => (
-                <TitleCard key={title.id} title={title} />
-              ))}
-            </div>
-          </div>
+        ) : (
+          <Card className="bg-gray-800 border-gray-700">
+            <CardContent className="p-8 text-center">
+              <p className="text-gray-400 text-lg mb-4">No titles obtained yet</p>
+              <p className="text-sm text-gray-500">
+                Win matches and level up to earn titles!
+              </p>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>
