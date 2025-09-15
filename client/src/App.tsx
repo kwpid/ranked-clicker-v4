@@ -45,7 +45,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gray-900 text-white">
       {renderScreen()}
     </div>
   );
