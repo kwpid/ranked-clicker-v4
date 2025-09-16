@@ -124,25 +124,6 @@ export function MainMenu() {
           </Card>
         </div>
 
-        {/* RCCS Tournament */}
-        <Card className="mb-6 bg-gradient-to-r from-cyan-900 to-blue-900 border-cyan-600 hover:from-cyan-800 hover:to-blue-800 transition-colors cursor-pointer"
-              onClick={() => setScreen("rccs")}>
-          <CardContent className="p-6">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Zap className="w-6 h-6 text-cyan-400" />
-                <h3 className="text-xl font-bold text-white">RCCS CHAMPIONSHIP</h3>
-              </div>
-              <p className="text-cyan-200 text-sm">
-                Ranked Clicker Championship Series - Weekly tournaments with exclusive titles
-              </p>
-              <Badge className="mt-2 bg-cyan-600 text-cyan-100">
-                Season 1 Active
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Menu Options */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Button
