@@ -1,0 +1,79 @@
+in this, add / fix tihngs:
+
+game loop:
+- add a tihng where it tells you to stop clicking for 1-4 seconds, then itgoes back to normal, if player or ai clicks during this they lose points
+- fix ai cps, higher mmr (1200+) = higher cps, and ai will typically match ur pace, either slower or faster
+
+titles:
+- titles dont show how i wnat. they should show just as text underneath the usernames on the game screen
+- background of team boxes (where usernames are) should be grey, just having the team color as the outline
+- title ccss / effects arent shown in game (glow / text oclor)
+not title based, but instead of "You" on the title screen, show the players username, just hightlight them
+
+Add the RCCS system:
+🏆 RCCS Monthly Cycle (per Ranked Season)
+RCCS Season = Ranked Season
+
+Week 1: Break / Off Days
+
+Ladder reset.
+
+Players grind Ranked to re-establish MMR.
+
+No tournaments this week → practice + prep.
+
+Week 2: Regional 1
+
+Format: Open Qualifiers → Swiss Stage → Playoffs.
+
+Crown: 1v1 Regional Champion + 3v3 Regional Champion.
+
+Points: RCCS Points awarded based on placement.
+
+Match Rules: Best of 5 (Bo5). Finals = Best of 7 (Bo7).
+
+Week 3: Regional 2
+
+Format: Same as Regional 1.
+
+Crown: Another set of Regional Champions.
+
+Points: More RCCS Points on the line.
+
+Match Rules: Best of 5 (Bo5). Finals = Best of 7 (Bo7).
+
+Week 4: Major + Worlds
+
+Major:
+
+Participants: Top RCCS Point earners from both Regionals.
+
+Higher stakes, bigger points.
+
+Matches: Best of 5 (Bo5), Finals = Best of 7 (Bo7).
+
+Worlds (Mini-Season Finals) – Last Day of the Season:
+
+Top 4 finishers from the Major qualify.
+
+Bracket to decide the 1v1 World Champion and 3v3 World Champion of that season.
+
+Matches: Best of 5 (Bo5), Finals = Best of 7 (Bo7).
+
+1v1 events happen after 3v3, follow the same bracket
+
+All opponents are AI
+
+TITLES TO BE AWARDED (ALL AQUA GLOW):
+RCCS S# CONTENDER (top 32 in any qualifier for regionals)
+RCCS S# REGIONAL FINALIST (top 6 in any regional)
+RCCS S# REGIONAL CHAMPION (top 1 in any regional)
+RCCS S# MAJOR FINALIST (top 6 in any major)
+RCCS S# MAJOR CHAMPION (top 1 in any major)
+RCCS S# WORLD CONTENDER (top 4 in worlds)
+RCCS S# WORLD CHAMPION (top 1 in worlds)
+goes for both 1v1 and 3v3 events
+
+
+EXTRA:
+RCCS S# ELITE (place top 3 consistnetly in each event, this is a golden color /glow)
