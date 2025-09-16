@@ -144,35 +144,45 @@ export function GameScreen() {
           {/* Score Display */}
           <div className="grid grid-cols-3 gap-8 mb-8">
             {/* Red Team */}
-            <Card className="bg-red-900 border-red-700">
+            <Card className="bg-gray-800 border-2 border-red-600">
               <CardContent className="p-6 text-center">
                 <h3 className="text-xl font-bold text-red-200 mb-2">RED TEAM</h3>
                 <p className="text-4xl font-bold text-white mb-4">{gameState.redScore}</p>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   {getTeamPlayers("red").map(player => (
-                    <div key={player.id} className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="text-red-200">{player.username}</span>
-                        {player.title && (
-                          <Badge variant="secondary" className="text-xs">
-                            {player.title}
-                          </Badge>
-                        )}
+                    <div key={player.id} className="text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-red-200 font-semibold">{player.username}</span>
+                        <span className="text-red-300">{player.mmr}</span>
                       </div>
-                      <span className="text-red-300">{player.mmr}</span>
+                      {player.title && (
+                        <div className={`text-xs mt-1 ${
+                          player.title.includes('RCCS') ? 'title-glow-aqua' :
+                          player.title.includes('ELITE') ? 'title-glow-golden' :
+                          player.title === 'LEGEND' ? 'title-glow-legend' :
+                          'text-red-400'
+                        }`}>
+                          {player.title}
+                        </div>
+                      )}
                     </div>
                   ))}
                   {gameState.playerTeam === "red" && (
-                    <div className="flex items-center justify-between text-sm font-bold border-t border-red-700 pt-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-red-100">You</span>
-                        {playerData.equippedTitle && (
-                          <Badge variant="secondary" className="text-xs">
-                            {playerData.equippedTitle}
-                          </Badge>
-                        )}
+                    <div className="text-sm font-bold border-t border-red-700 pt-2 bg-red-800 rounded p-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-red-100 font-bold">{playerData.username}</span>
+                        <span className="text-red-100">{gameState.playerClicks} clicks</span>
                       </div>
-                      <span className="text-red-100">{gameState.playerClicks} clicks</span>
+                      {playerData.equippedTitle && (
+                        <div className={`text-xs mt-1 ${
+                          playerData.equippedTitle.includes('RCCS') ? 'title-glow-aqua' :
+                          playerData.equippedTitle.includes('ELITE') ? 'title-glow-golden' :
+                          playerData.equippedTitle === 'LEGEND' ? 'title-glow-legend' :
+                          'text-red-300'
+                        }`}>
+                          {playerData.equippedTitle}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -185,35 +195,45 @@ export function GameScreen() {
             </div>
 
             {/* Blue Team */}
-            <Card className="bg-blue-900 border-blue-700">
+            <Card className="bg-gray-800 border-2 border-blue-600">
               <CardContent className="p-6 text-center">
                 <h3 className="text-xl font-bold text-blue-200 mb-2">BLUE TEAM</h3>
                 <p className="text-4xl font-bold text-white mb-4">{gameState.blueScore}</p>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   {getTeamPlayers("blue").map(player => (
-                    <div key={player.id} className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="text-blue-200">{player.username}</span>
-                        {player.title && (
-                          <Badge variant="secondary" className="text-xs">
-                            {player.title}
-                          </Badge>
-                        )}
+                    <div key={player.id} className="text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-blue-200 font-semibold">{player.username}</span>
+                        <span className="text-blue-300">{player.mmr}</span>
                       </div>
-                      <span className="text-blue-300">{player.mmr}</span>
+                      {player.title && (
+                        <div className={`text-xs mt-1 ${
+                          player.title.includes('RCCS') ? 'title-glow-aqua' :
+                          player.title.includes('ELITE') ? 'title-glow-golden' :
+                          player.title === 'LEGEND' ? 'title-glow-legend' :
+                          'text-blue-400'
+                        }`}>
+                          {player.title}
+                        </div>
+                      )}
                     </div>
                   ))}
                   {gameState.playerTeam === "blue" && (
-                    <div className="flex items-center justify-between text-sm font-bold border-t border-blue-700 pt-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-blue-100">You</span>
-                        {playerData.equippedTitle && (
-                          <Badge variant="secondary" className="text-xs">
-                            {playerData.equippedTitle}
-                          </Badge>
-                        )}
+                    <div className="text-sm font-bold border-t border-blue-700 pt-2 bg-blue-800 rounded p-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-blue-100 font-bold">{playerData.username}</span>
+                        <span className="text-blue-100">{gameState.playerClicks} clicks</span>
                       </div>
-                      <span className="text-blue-100">{gameState.playerClicks} clicks</span>
+                      {playerData.equippedTitle && (
+                        <div className={`text-xs mt-1 ${
+                          playerData.equippedTitle.includes('RCCS') ? 'title-glow-aqua' :
+                          playerData.equippedTitle.includes('ELITE') ? 'title-glow-golden' :
+                          playerData.equippedTitle === 'LEGEND' ? 'title-glow-legend' :
+                          'text-blue-300'
+                        }`}>
+                          {playerData.equippedTitle}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -221,16 +241,56 @@ export function GameScreen() {
             </Card>
           </div>
 
+          {/* Stop Clicking Warning - Prominent and Clear */}
+          {gameState.gamePhase === "playing" && gameState.stopClickingActive && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-red-900 border-4 border-red-500 rounded-lg p-8 animate-pulse max-w-md mx-4 text-center">
+                <div className="text-6xl mb-4">🛑</div>
+                <p className="text-4xl font-bold text-red-100 mb-4">STOP CLICKING!</p>
+                <div className="text-6xl font-bold text-red-200 mb-4">
+                  {Math.ceil(gameState.stopClickingTimeRemaining)}
+                </div>
+                <p className="text-lg text-red-300 mb-2">seconds remaining</p>
+                <p className="text-red-400">⚠️ Clicking now will lose you 3 points! ⚠️</p>
+              </div>
+            </div>
+          )}
+          
+          {/* Stop Clicking Warning Banner */}
+          {gameState.gamePhase === "playing" && gameState.stopClickingActive && (
+            <div className="text-center mb-4">
+              <div className="bg-red-900 border-2 border-red-500 rounded-lg p-4 animate-pulse">
+                <p className="text-2xl font-bold text-red-300 mb-1">🛑 STOP CLICKING! 🛑</p>
+                <p className="text-xl text-red-200">
+                  {Math.ceil(gameState.stopClickingTimeRemaining)}s remaining
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Click Area */}
           {gameState.gamePhase === "playing" && (
             <div className="text-center">
               <div 
-                className="game-click-area w-full h-64 bg-gray-800 border-2 border-gray-600 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors select-none"
+                className={`game-click-area w-full h-64 border-2 rounded-lg flex items-center justify-center transition-colors select-none ${
+                  gameState.stopClickingActive 
+                    ? 'bg-red-900 border-red-500 cursor-not-allowed' 
+                    : 'bg-gray-800 border-gray-600 cursor-pointer hover:bg-gray-700'
+                }`}
                 style={{ userSelect: 'none' }}
               >
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-white mb-2">CLICK TO SCORE!</p>
-                  <p className="text-gray-400">Click anywhere in this area to gain points for your team</p>
+                  {gameState.stopClickingActive ? (
+                    <>
+                      <p className="text-2xl font-bold text-red-300 mb-2">DON'T CLICK!</p>
+                      <p className="text-red-400">Wait for the stop period to end</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-2xl font-bold text-white mb-2">CLICK TO SCORE!</p>
+                      <p className="text-gray-400">Click anywhere in this area to gain points for your team</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

@@ -65,11 +65,18 @@ export const generateAIPlayers = (
 };
 
 const getClickingStatsFromMMR = (mmr: number): number => {
-  // Base clicking speed increases with MMR
-  const baseSpeed = Math.max(1, mmr / 200); // 1 CPS at 200 MMR, 3 CPS at 600 MMR, etc.
+  // Improved CPS scaling for higher MMR players (1200+)
+  let baseSpeed;
+  if (mmr >= 1200) {
+    // High MMR players: 6+ CPS
+    baseSpeed = 6 + (mmr - 1200) / 100; // 6 CPS at 1200 MMR, increases by 1 every 100 MMR
+  } else {
+    // Lower MMR players: gradual increase
+    baseSpeed = Math.max(1, mmr / 200); // 1 CPS at 200 MMR, 6 CPS at 1200 MMR
+  }
   
   // Add some randomness
-  const variance = 0.5;
+  const variance = 0.3;
   const randomFactor = 1 + (Math.random() - 0.5) * variance;
   
   return Math.max(0.5, baseSpeed * randomFactor);
@@ -93,14 +100,36 @@ const generateAITitle = (rank: string, mmr: number): string => {
   return titles[Math.floor(Math.random() * titles.length)];
 };
 
-export const simulateAIClicking = (ai: AIPlayer, deltaTime: number): number => {
-  // Calculate clicks based on CPS and time
-  const baseClicks = ai.clicksPerSecond * (deltaTime / 1000);
+export const simulateAIClicking = (ai: AIPlayer, deltaTime: number, stopClickingActive: boolean = false, playerCurrentCPS: number = 0): number => {
+  // Adapt AI CPS based on player pace (if player is actively clicking)
+  let adaptedCPS = ai.clicksPerSecond;
+  if (playerCurrentCPS > 0) {
+    // AI tries to match or be slightly slower/faster than player
+    const paceVariation = 0.8 + Math.random() * 0.4; // 80% to 120% of player pace
+    const targetCPS = playerCurrentCPS * paceVariation;
+    
+    // Blend with AI's natural CPS based on MMR (higher MMR = better adaptation)
+    const adaptationStrength = Math.min(0.8, ai.mmr / 1500); // Up to 80% adaptation for 1500+ MMR
+    adaptedCPS = ai.clicksPerSecond * (1 - adaptationStrength) + targetCPS * adaptationStrength;
+  }
+  
+  // Calculate clicks based on adapted CPS and time
+  const baseClicks = adaptedCPS * (deltaTime / 1000);
   
   // Add variance to make it feel more human
   const variance = 1 + (Math.random() - 0.5) * ai.variance;
   const actualClicks = baseClicks * variance;
   
-  // Return rounded clicks
-  return Math.floor(actualClicks + Math.random()); // Random chance for extra click
+  const clicks = Math.floor(actualClicks + Math.random()); // Random chance for extra click
+  
+  // If stop clicking is active, AI might accidentally click (lower MMR AI more likely)
+  if (stopClickingActive && clicks > 0) {
+    const mistakeChance = Math.max(0.05, (1200 - ai.mmr) / 2000); // Higher MMR = lower mistake chance
+    if (Math.random() < mistakeChance) {
+      return -3; // Penalty for clicking during stop period
+    }
+    return 0; // AI successfully stopped clicking
+  }
+  
+  return clicks;
 };

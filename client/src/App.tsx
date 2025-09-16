@@ -8,6 +8,7 @@ import { SettingsMenu } from "./components/game/SettingsMenu";
 import { TitlesMenu } from "./components/game/TitlesMenu";
 import { StatsMenu } from "./components/game/StatsMenu";
 import { Leaderboard } from "./components/game/Leaderboard";
+import { RCCSMenu } from "./components/game/RCCSMenu";
 import { useGameStore } from "./lib/stores/useGameStore";
 import { GameScreen as GameScreenType } from "./lib/types";
 import "@fontsource/inter";
@@ -39,6 +40,8 @@ function App() {
         return <StatsMenu />;
       case "leaderboard":
         return <Leaderboard />;
+      case "rccs":
+        return <RCCSMenu />;
       default:
         return <MainMenu />;
     }

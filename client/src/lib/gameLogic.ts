@@ -31,7 +31,12 @@ export const createGameState = (
     redScore: 0,
     blueScore: 0,
     playerClicks: 0,
-    matchStarted: false
+    matchStarted: false,
+    stopClickingActive: false,
+    stopClickingTimeRemaining: 0,
+    nextStopClickingIn: Math.random() * 15 + 10, // First stop clicking event in 10-25 seconds
+    playerClickTimes: [],
+    playerCurrentCPS: 0
   };
 };
 
@@ -54,23 +59,70 @@ export const updateGameState = (
     // Update timer
     newState.timeRemaining -= deltaTime / 1000;
     
-    // Handle player clicking
-    if (playerClicked) {
-      newState.playerClicks += 1;
-      if (state.playerTeam === "red") {
-        newState.redScore += 1;
-      } else {
-        newState.blueScore += 1;
+    // Update stop clicking mechanics
+    if (state.stopClickingActive) {
+      newState.stopClickingTimeRemaining -= deltaTime / 1000;
+      if (newState.stopClickingTimeRemaining <= 0) {
+        newState.stopClickingActive = false;
+        newState.nextStopClickingIn = Math.random() * 15 + 10; // Next event in 10-25 seconds
+      }
+    } else {
+      newState.nextStopClickingIn -= deltaTime / 1000;
+      if (newState.nextStopClickingIn <= 0) {
+        newState.stopClickingActive = true;
+        newState.stopClickingTimeRemaining = Math.random() * 3 + 1; // 1-4 seconds
       }
     }
     
-    // Simulate AI clicking
-    state.players.forEach(ai => {
-      const clicks = simulateAIClicking(ai, deltaTime);
-      if (ai.team === "red") {
-        newState.redScore += clicks;
+    // Handle player clicking
+    if (playerClicked) {
+      const currentTime = Date.now() / 1000;
+      
+      if (state.stopClickingActive) {
+        // Penalty: lose 3 points for clicking during stop period
+        if (state.playerTeam === "red") {
+          newState.redScore = Math.max(0, newState.redScore - 3);
+        } else {
+          newState.blueScore = Math.max(0, newState.blueScore - 3);
+        }
       } else {
-        newState.blueScore += clicks;
+        // Normal clicking
+        newState.playerClicks += 1;
+        if (state.playerTeam === "red") {
+          newState.redScore += 1;
+        } else {
+          newState.blueScore += 1;
+        }
+        
+        // Track click times for CPS calculation
+        newState.playerClickTimes = [...state.playerClickTimes, currentTime];
+        // Keep only clicks from the last 5 seconds
+        newState.playerClickTimes = newState.playerClickTimes.filter(time => currentTime - time <= 5);
+        
+        // Calculate current CPS
+        if (newState.playerClickTimes.length >= 2) {
+          const timeSpan = currentTime - newState.playerClickTimes[0];
+          newState.playerCurrentCPS = timeSpan > 0 ? newState.playerClickTimes.length / timeSpan : 0;
+        }
+      }
+    }
+    
+    // Simulate AI clicking with pace adaptation
+    state.players.forEach(ai => {
+      const clicks = simulateAIClicking(ai, deltaTime, newState.stopClickingActive, newState.playerCurrentCPS);
+      if (clicks > 0) {
+        if (ai.team === "red") {
+          newState.redScore += clicks;
+        } else {
+          newState.blueScore += clicks;
+        }
+      } else if (clicks < 0) {
+        // AI clicked during stop period - penalty
+        if (ai.team === "red") {
+          newState.redScore = Math.max(0, newState.redScore + clicks); // clicks is negative
+        } else {
+          newState.blueScore = Math.max(0, newState.blueScore + clicks); // clicks is negative
+        }
       }
     });
     

@@ -47,3 +47,5 @@ export const GAME_SETTINGS = {
 };
 
 export const CURRENT_SEASON = 1;
+
+export const RCCS_SEASON = 1;

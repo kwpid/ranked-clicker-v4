@@ -7,7 +7,8 @@ export type GameScreen =
   | "settings" 
   | "titles" 
   | "stats"
-  | "leaderboard";
+  | "leaderboard"
+  | "rccs";
 
 export type QueueType = "casual" | "ranked";
 
@@ -26,7 +27,7 @@ export type Rank =
 
 export type Division = "I" | "II" | "III" | "IV" | "V";
 
-export type TitleType = "XP" | "Ranked" | "Competitive";
+export type TitleType = "XP" | "Ranked" | "Competitive" | "RCCS";
 
 export interface PlayerData {
   username: string;
@@ -100,6 +101,11 @@ export interface GameState {
   blueScore: number;
   playerClicks: number;
   matchStarted: boolean;
+  stopClickingActive: boolean;
+  stopClickingTimeRemaining: number;
+  nextStopClickingIn: number;
+  playerClickTimes: number[]; // Track recent click times for CPS calculation
+  playerCurrentCPS: number;
 }
 
 export interface MatchResult {
@@ -126,4 +132,54 @@ export interface Title {
   color: string;
   glow?: boolean;
   season?: number;
+}
+
+export type RCCSTournamentType = "Regional1" | "Regional2" | "Major" | "Worlds";
+
+export type RCCSWeek = 1 | 2 | 3 | 4;
+
+export interface RCCSTournament {
+  id: string;
+  name: string;
+  type: RCCSTournamentType;
+  week: RCCSWeek;
+  gameMode: GameMode;
+  season: number;
+  isActive: boolean;
+  startDate: Date;
+  endDate: Date;
+  participants: string[];
+  brackets: RCCSBracket[];
+}
+
+export interface RCCSBracket {
+  round: number;
+  matches: RCCSMatch[];
+}
+
+export interface RCCSMatch {
+  id: string;
+  player1: string;
+  player2: string;
+  winner?: string;
+  bestOf: number;
+  completed: boolean;
+  score?: { player1: number; player2: number };
+}
+
+export interface RCCSSeasonData {
+  season: number;
+  currentWeek: RCCSWeek;
+  weekStartDate: Date;
+  tournaments: RCCSTournament[];
+  playerStats: {
+    points: number;
+    wins: number;
+    losses: number;
+    tournamentWins: number;
+    regionalsWon: number;
+    majorsWon: number;
+    worldsWon: number;
+  };
+  titles: string[];
 }

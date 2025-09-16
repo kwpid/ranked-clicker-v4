@@ -26,3 +26,19 @@ canvas {
   height: 100% !important;
   touch-action: none;
 }
+
+/* Title glow effects */
+.title-glow-aqua {
+  color: #00ffff !important;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8), 0 0 16px rgba(0, 255, 255, 0.6) !important;
+}
+
+.title-glow-golden {
+  color: #ffd700 !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.6) !important;
+}
+
+.title-glow-legend {
+  color: #ffd700 !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.6), 0 0 24px rgba(255, 215, 0, 0.4) !important;
+}
