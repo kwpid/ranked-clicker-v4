@@ -21,7 +21,7 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     color: "text-cyan-400",
     glow: "title-glow-aqua",
     unlocked: true,
-    owned: false
+    owned: false,
   },
   {
     id: "rccs_s1_regional_finalist",
@@ -31,7 +31,7 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     color: "text-cyan-400",
     glow: "title-glow-aqua",
     unlocked: true,
-    owned: false
+    owned: false,
   },
   {
     id: "rccs_s1_regional_champion",
@@ -41,27 +41,67 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     color: "text-cyan-400",
     glow: "title-glow-aqua",
     unlocked: true,
-    owned: false
+    owned: false,
   },
   {
-    id: "rccs_s1_regional_finalist",
-    name: "RCCS S1 REGIONAL FINALIST",
+    id: "rccs_s1_major_contender",
+    name: "RCCS S1 MAJOR CONTENDER",
     type: "Custom",
-    description: "Finish top 6 in a RCCS Regional",
+    description: "Finish top 16 in a RCCS Major",
     color: "text-cyan-400",
     glow: "title-glow-aqua",
     unlocked: true,
-    owned: false
+    owned: false,
+  },
+  {
+    id: "rccs_s1_major_finalist",
+    name: "RCCS S1 MAJOR FINALIST",
+    type: "Custom",
+    description: "Finish top 6 in a RCCS Major",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false,
+  },
+  {
+    id: "rccs_s1_major_champion",
+    name: "RCCS S1 MAJOR CHAMPION",
+    type: "Custom",
+    description: "Finish top 1 in a RCCS Major",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false,
+  },
+  {
+    id: "rccs_s1_worlds_contender",
+    name: "RCCS S1 WORLDS CONTENDER",
+    type: "Custom",
+    description: "Finish top 16 in RCCS Worlds",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false,
+  },
+  {
+    id: "rccs_s1_worlds_finalist",
+    name: "RCCS S1 WORLDS FINALIIST",
+    type: "Custom",
+    description: "Finish top 4 in RCCS Worlds",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false,
   },
   {
     id: "rccs_s1_champion",
     name: "RCCS S1 CHAMPION",
-    type: "Custom", 
+    type: "Custom",
     description: "Won RCCS Season 1",
     color: "text-yellow-400",
     glow: "title-glow-golden",
     unlocked: false,
-    owned: false
+    owned: false,
   },
   {
     id: "beta_tester",
@@ -71,7 +111,7 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     color: "text-purple-400",
     glow: null,
     unlocked: true,
-    owned: false
+    owned: false,
   },
   {
     id: "developer",
@@ -81,14 +121,17 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     color: "text-red-400",
     glow: "title-glow-custom",
     unlocked: false,
-    owned: false
-  }
+    owned: false,
+  },
 ];
 
 // Function to get leaderboard position titles
-export const getLeaderboardPositionTitle = (position: number, gameMode: string): CustomTitle | null => {
+export const getLeaderboardPositionTitle = (
+  position: number,
+  gameMode: string,
+): CustomTitle | null => {
   if (position > 30) return null;
-  
+
   return {
     id: `ranked_${position}_${gameMode}`,
     name: `RANKED #${position} (${gameMode.toUpperCase()})`,
@@ -97,21 +140,24 @@ export const getLeaderboardPositionTitle = (position: number, gameMode: string):
     color: "text-white",
     glow: "title-glow-rainbow",
     unlocked: true,
-    owned: true
+    owned: true,
   };
 };
 
 // Function to apply custom glow style
-export const getCustomGlowStyle = (glowClass: string | null, customColor?: string): React.CSSProperties => {
+export const getCustomGlowStyle = (
+  glowClass: string | null,
+  customColor?: string,
+): React.CSSProperties => {
   if (!glowClass) return {};
-  
+
   if (glowClass === "title-glow-custom" && customColor) {
     return {
       color: customColor,
       textShadow: `0 0 8px ${customColor}80, 0 0 16px ${customColor}60`,
-      fontWeight: 'bold'
+      fontWeight: "bold",
     };
   }
-  
+
   return {};
 };

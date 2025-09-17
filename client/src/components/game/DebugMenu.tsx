@@ -66,7 +66,9 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
         <CardContent className="space-y-6">
           {/* Add Custom Title */}
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-white">Add Custom Title</h3>
+            <h3 className="text-lg font-semibold text-white">
+              Add Custom Title
+            </h3>
             <div className="flex gap-2">
               <Input
                 placeholder="Enter custom title..."
@@ -75,7 +77,10 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
                 onKeyDown={(e) => e.key === "Enter" && handleAddCustomTitle()}
                 className="bg-gray-700 border-gray-600 text-white"
               />
-              <Button onClick={handleAddCustomTitle} disabled={!customTitleInput.trim()}>
+              <Button
+                onClick={handleAddCustomTitle}
+                disabled={!customTitleInput.trim()}
+              >
                 Add
               </Button>
             </div>
@@ -83,7 +88,9 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
 
           {/* Preset Custom Titles */}
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-white">Preset Custom Titles</h3>
+            <h3 className="text-lg font-semibold text-white">
+              Preset Custom Titles
+            </h3>
             <div className="grid grid-cols-1 gap-2">
               {CUSTOM_TITLES.map((title) => (
                 <div
@@ -91,7 +98,9 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
                   className="flex items-center justify-between p-3 bg-gray-700 rounded-lg"
                 >
                   <div>
-                    <span className={`font-bold ${title.color} ${title.glow ? title.glow : ""}`}>
+                    <span
+                      className={`font-bold ${title.color} ${title.glow ? title.glow : ""}`}
+                    >
                       {title.name}
                     </span>
                     <p className="text-sm text-gray-400">{title.description}</p>
@@ -111,7 +120,9 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
                         onClick={() => handleEquipTitle(title.name)}
                         disabled={playerData.equippedTitle === title.name}
                       >
-                        {playerData.equippedTitle === title.name ? "Equipped" : "Equip"}
+                        {playerData.equippedTitle === title.name
+                          ? "Equipped"
+                          : "Equip"}
                       </Button>
                     )}
                   </div>
@@ -147,7 +158,13 @@ export function DebugMenu({ isOpen, onClose }: DebugMenuProps) {
           <div className="bg-gray-700 rounded-lg p-3">
             <h4 className="text-white font-semibold mb-2">Instructions</h4>
             <ul className="text-sm text-gray-300 space-y-1">
-              <li>• Press <Badge variant="outline" className="text-xs">F1</Badge> to open/close this menu</li>
+              <li>
+                • Press{" "}
+                <Badge variant="outline" className="text-xs">
+                  F
+                </Badge>{" "}
+                to open/close this menu
+              </li>
               <li>• Add any custom title to your collection</li>
               <li>• Use preset titles with special effects</li>
               <li>• Press Escape to close this menu</li>
