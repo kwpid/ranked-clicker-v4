@@ -6,6 +6,7 @@ import { getRankColor } from "@/lib/rankingSystem";
 import { getTitleClasses } from "@/lib/titleDisplay";
 import { ArrowLeft, Crown, Trophy, Star, CheckCircle } from "lucide-react";
 import { CURRENT_SEASON } from "@/lib/constants";
+import { CUSTOM_TITLES } from "@/lib/customTitles";
 
 export function TitlesMenu() {
   const { playerData, equipTitle, setScreen } = useGameStore();
@@ -27,7 +28,7 @@ export function TitlesMenu() {
     const titles: Array<{
       id: string;
       name: string;
-      type: 'XP' | 'Ranked' | 'Competitive';
+      type: 'XP' | 'Ranked' | 'Competitive' | 'Custom' | 'Leaderboard';
       description: string;
       unlocked: boolean;
       owned: boolean;
@@ -90,7 +91,46 @@ export function TitlesMenu() {
           color: "text-blue-400",
           glow: false
         });
+      } else if (title.startsWith("RANKED #")) {
+        // Leaderboard position titles
+        titles.push({
+          id: title,
+          name: title,
+          type: "Leaderboard" as const,
+          description: "Leaderboard position title",
+          unlocked: true,
+          owned: true,
+          color: "text-white",
+          glow: true
+        });
+      } else if (title.includes("RCCS")) {
+        // RCCS tournament titles
+        titles.push({
+          id: title,
+          name: title,
+          type: "Custom" as const,
+          description: "RCCS tournament achievement",
+          unlocked: true,
+          owned: true,
+          color: "text-cyan-400",
+          glow: true
+        });
       }
+    });
+
+    // Custom RCCS Titles (from CUSTOM_TITLES array)
+    CUSTOM_TITLES.forEach(customTitle => {
+      const isOwned = playerData.titles.includes(customTitle.name);
+      titles.push({
+        id: customTitle.id,
+        name: customTitle.name,
+        type: "Custom" as const,
+        description: customTitle.description,
+        unlocked: customTitle.unlocked || false,
+        owned: isOwned,
+        color: customTitle.color,
+        glow: !!customTitle.glow
+      });
     });
 
     // Competitive Titles (Future tournaments)
@@ -124,6 +164,8 @@ export function TitlesMenu() {
       case "XP": return <Star className="w-4 h-4" />;
       case "Ranked": return <Crown className="w-4 h-4" />;
       case "Competitive": return <Trophy className="w-4 h-4" />;
+      case "Custom": return <Trophy className="w-4 h-4" />;
+      case "Leaderboard": return <Crown className="w-4 h-4" />;
       default: return <Star className="w-4 h-4" />;
     }
   };
@@ -145,7 +187,13 @@ export function TitlesMenu() {
       >
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <Badge variant={title.type === "XP" ? "secondary" : title.type === "Ranked" ? "default" : "destructive"}>
+            <Badge variant={
+              title.type === "XP" ? "secondary" : 
+              title.type === "Ranked" ? "default" : 
+              title.type === "Leaderboard" ? "default" :
+              title.type === "Custom" ? "outline" :
+              "destructive"
+            }>
               {getTitleIcon(title.type)}
               <span className="ml-1">{title.type}</span>
             </Badge>
