@@ -103,18 +103,6 @@ export function TitlesMenu() {
           color: "text-white",
           glow: true
         });
-      } else if (title.includes("RCCS")) {
-        // RCCS tournament titles
-        titles.push({
-          id: title,
-          name: title,
-          type: "Custom" as const,
-          description: "RCCS tournament achievement",
-          unlocked: true,
-          owned: true,
-          color: "text-cyan-400",
-          glow: true
-        });
       }
     });
 
