@@ -36,7 +36,7 @@ export const generateAIPlayers = (
     } while (usedNames.has(username));
     usedNames.add(username);
     
-    // Generate MMR close to player's MMR
+    // Generate MMR close to player's MMR with improved logic for high MMR players
     const mmr = generateAIMMR(playerMMR, 150);
     const rank = getRankFromMMR(mmr);
     
@@ -83,7 +83,7 @@ const getClickingStatsFromMMR = (mmr: number): number => {
 };
 
 const generateAITitle = (rank: string, mmr: number): string => {
-  const titles = [
+  const basicTitles = [
     "CLICKER",
     "SPEED DEMON", 
     "RAPID FIRE",
@@ -91,13 +91,52 @@ const generateAITitle = (rank: string, mmr: number): string => {
     "FINGER FURY"
   ];
   
-  // Higher MMR players more likely to have ranked titles
+  const rccsTitles = [
+    "RCCS S1 CONTENDER",
+    "RCCS S1 REGIONAL FINALIST",
+    "RCCS S1 REGIONAL CHAMPION",
+    "RCCS S1 MAJOR CONTENDER",
+    "RCCS S1 MAJOR FINALIST"
+  ];
+  
+  // Leaderboard MMR players (1850+) should use RCCS or leaderboard titles
+  if (mmr >= 1850) {
+    const choice = Math.random();
+    if (choice < 0.4) {
+      // 40% chance for leaderboard title
+      const position = Math.floor(Math.random() * 30) + 1;
+      const gameMode = ["1V1", "2V2", "3V3"][Math.floor(Math.random() * 3)];
+      return `RANKED #${position} (${gameMode})`;
+    } else if (choice < 0.8) {
+      // 40% chance for RCCS title
+      return rccsTitles[Math.floor(Math.random() * rccsTitles.length)];
+    } else {
+      // 20% chance for ranked title
+      const season = Math.floor(Math.random() * CURRENT_SEASON) + 1;
+      return `S${season} ${rank.toUpperCase()}`;
+    }
+  }
+  
+  // High MMR players (1600-1850) more likely to have RCCS or ranked titles
+  if (mmr >= 1600) {
+    const choice = Math.random();
+    if (choice < 0.3) {
+      // 30% chance for RCCS title
+      return rccsTitles[Math.floor(Math.random() * rccsTitles.length)];
+    } else if (choice < 0.7) {
+      // 40% chance for ranked title
+      const season = Math.floor(Math.random() * CURRENT_SEASON) + 1;
+      return `S${season} ${rank.toUpperCase()}`;
+    }
+  }
+  
+  // Mid-high MMR players (1000-1600) more likely to have ranked titles
   if (mmr > 1000 && Math.random() < 0.6) {
     const season = Math.floor(Math.random() * CURRENT_SEASON) + 1;
     return `S${season} ${rank.toUpperCase()}`;
   }
   
-  return titles[Math.floor(Math.random() * titles.length)];
+  return basicTitles[Math.floor(Math.random() * basicTitles.length)];
 };
 
 export const simulateAIClicking = (ai: AIPlayer, deltaTime: number, stopClickingActive: boolean = false, playerCurrentCPS: number = 0): number => {

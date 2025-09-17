@@ -22,6 +22,16 @@ export const calculateEloChange = (
 };
 
 export const generateAIMMR = (baseMMR: number, variance: number = 100): number => {
+  // Special logic for high MMR players (1700+)
+  if (baseMMR >= 1700) {
+    // For high MMR players, restrict AI opponents to 1600-1850 range to avoid random high MMR AIs
+    // This ensures they only face leaderboard players or players in the pre-leaderboard range
+    const min = 1600;
+    const max = 1850;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  // Normal logic for lower MMR players
   const min = Math.max(0, baseMMR - variance);
   const max = baseMMR + variance;
   return Math.floor(Math.random() * (max - min + 1)) + min;

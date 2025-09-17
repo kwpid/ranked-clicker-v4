@@ -28,7 +28,7 @@ export interface LeaderboardData {
 }
 
 const STORAGE_KEY = "ranked-clicker-leaderboard";
-const GRAND_CHAMPION_MIN_MMR = 1600;
+const GRAND_CHAMPION_MIN_MMR = 1850;
 const LEADERBOARD_SIZE = 30;
 
 // Generate high-level AI players for the leaderboard
@@ -109,21 +109,67 @@ export const generateLeaderboardPlayers = (): LeaderboardPlayer[] => {
 
     // Generate title (higher chance for elite players)
     let title: string | undefined;
-    const titleChance = config.type === 'elite' ? 0.8 : config.type === 'versatile' ? 0.5 : 0.3;
+    const titleChance = config.type === 'elite' ? 0.9 : config.type === 'versatile' ? 0.7 : 0.5;
     
     if (Math.random() < titleChance) {
       // Find their highest rank for title generation
       const highestMMR = Math.max(mmrs["1v1"], mmrs["2v2"], mmrs["3v3"]);
       const highestRank = getRankFromMMR(highestMMR);
       
-      if (Math.random() < 0.7) {
-        // Season title
-        const season = Math.max(1, CURRENT_SEASON - Math.floor(Math.random() * 3));
-        title = `S${season} ${highestRank.rank.toUpperCase()}`;
+      const rccsTitles = [
+        "RCCS S1 CONTENDER",
+        "RCCS S1 REGIONAL FINALIST", 
+        "RCCS S1 REGIONAL CHAMPION",
+        "RCCS S1 MAJOR CONTENDER",
+        "RCCS S1 MAJOR FINALIST",
+        "RCCS S1 MAJOR CHAMPION",
+        "RCCS S1 WORLDS CONTENDER",
+        "RCCS S1 WORLDS FINALIST",
+        "RCCS S1 CHAMPION"
+      ];
+      
+      // For very high MMR players (2200+), prioritize leaderboard and RCCS titles
+      if (highestMMR >= 2200) {
+        const choice = Math.random();
+        if (choice < 0.4) {
+          // 40% chance for leaderboard position title
+          const position = Math.floor(Math.random() * 10) + 1; // Top 10 positions
+          const gameMode = ["1V1", "2V2", "3V3"][Math.floor(Math.random() * 3)];
+          title = `RANKED #${position} (${gameMode})`;
+        } else if (choice < 0.8) {
+          // 40% chance for RCCS title
+          title = rccsTitles[Math.floor(Math.random() * rccsTitles.length)];
+        } else {
+          // 20% chance for season title
+          const season = Math.max(1, CURRENT_SEASON - Math.floor(Math.random() * 2));
+          title = `S${season} ${highestRank.rank.toUpperCase()}`;
+        }
+      } else if (highestMMR >= 1850) {
+        // For leaderboard MMR players (1850+), mix of RCCS and other titles
+        const choice = Math.random();
+        if (choice < 0.5) {
+          // 50% chance for RCCS title
+          title = rccsTitles[Math.floor(Math.random() * rccsTitles.length)];
+        } else if (choice < 0.8) {
+          // 30% chance for season title
+          const season = Math.max(1, CURRENT_SEASON - Math.floor(Math.random() * 3));
+          title = `S${season} ${highestRank.rank.toUpperCase()}`;
+        } else {
+          // 20% chance for custom title
+          const customTitles = ["LEGEND", "ELITE", "MASTER", "CHAMPION", "ACE", "PRO"];
+          title = customTitles[Math.floor(Math.random() * customTitles.length)];
+        }
       } else {
-        // Custom title
-        const customTitles = ["LEGEND", "ELITE", "MASTER", "CHAMPION", "ACE", "PRO"];
-        title = customTitles[Math.floor(Math.random() * customTitles.length)];
+        // For lower MMR leaderboard players, standard distribution
+        if (Math.random() < 0.7) {
+          // Season title
+          const season = Math.max(1, CURRENT_SEASON - Math.floor(Math.random() * 3));
+          title = `S${season} ${highestRank.rank.toUpperCase()}`;
+        } else {
+          // Custom title
+          const customTitles = ["LEGEND", "ELITE", "MASTER", "CHAMPION", "ACE", "PRO"];
+          title = customTitles[Math.floor(Math.random() * customTitles.length)];
+        }
       }
     }
 
