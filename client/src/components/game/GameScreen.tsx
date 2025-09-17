@@ -159,6 +159,8 @@ export function GameScreen() {
                         <div className={`text-xs mt-1 ${
                           player.title.includes('RCCS') ? 'title-glow-aqua' :
                           player.title.includes('ELITE') ? 'title-glow-golden' :
+                          player.title.includes('GRAND CHAMPION') ? 'title-glow-golden' :
+                          player.title.startsWith('RANKED #') ? 'title-glow-rainbow' :
                           player.title === 'LEGEND' ? 'title-glow-legend' :
                           'text-red-400'
                         }`}>
@@ -177,6 +179,8 @@ export function GameScreen() {
                         <div className={`text-xs mt-1 ${
                           playerData.equippedTitle.includes('RCCS') ? 'title-glow-aqua' :
                           playerData.equippedTitle.includes('ELITE') ? 'title-glow-golden' :
+                          playerData.equippedTitle.includes('GRAND CHAMPION') ? 'title-glow-golden' :
+                          playerData.equippedTitle.startsWith('RANKED #') ? 'title-glow-rainbow' :
                           playerData.equippedTitle === 'LEGEND' ? 'title-glow-legend' :
                           'text-red-300'
                         }`}>
@@ -210,6 +214,8 @@ export function GameScreen() {
                         <div className={`text-xs mt-1 ${
                           player.title.includes('RCCS') ? 'title-glow-aqua' :
                           player.title.includes('ELITE') ? 'title-glow-golden' :
+                          player.title.includes('GRAND CHAMPION') ? 'title-glow-golden' :
+                          player.title.startsWith('RANKED #') ? 'title-glow-rainbow' :
                           player.title === 'LEGEND' ? 'title-glow-legend' :
                           'text-blue-400'
                         }`}>

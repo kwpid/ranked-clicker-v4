@@ -66,7 +66,7 @@ export function TitlesMenu() {
         const [season, rank] = title.split(" ");
         const rankName = rank as any;
         const color = getRankColor(rankName);
-        const glow = rankName === "GRAND CHAMPION";
+        const glow = rankName === "GRAND CHAMPION" || title.includes("GRAND CHAMPION");
         
         titles.push({
           id: title,

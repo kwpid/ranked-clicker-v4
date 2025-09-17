@@ -9,16 +9,30 @@ import { TitlesMenu } from "./components/game/TitlesMenu";
 import { StatsMenu } from "./components/game/StatsMenu";
 import { Leaderboard } from "./components/game/Leaderboard";
 import { RCCSMenu } from "./components/game/RCCSMenu";
+import { DebugMenu } from "./components/game/DebugMenu";
 import { useGameStore } from "./lib/stores/useGameStore";
 import { GameScreen as GameScreenType } from "./lib/types";
 import "@fontsource/inter";
 
 function App() {
   const { currentScreen, initializePlayer } = useGameStore();
+  const [debugMenuOpen, setDebugMenuOpen] = useState(false);
 
   useEffect(() => {
     initializePlayer();
   }, [initializePlayer]);
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "F1") {
+        e.preventDefault();
+        setDebugMenuOpen(!debugMenuOpen);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, [debugMenuOpen]);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -50,6 +64,10 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {renderScreen()}
+      <DebugMenu 
+        isOpen={debugMenuOpen} 
+        onClose={() => setDebugMenuOpen(false)} 
+      />
     </div>
   );
 }

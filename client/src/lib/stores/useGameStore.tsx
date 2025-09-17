@@ -17,6 +17,7 @@ import {
 } from "../localStorage";
 import { createGameState, updateGameState, calculateMatchResult } from "../gameLogic";
 import { completeMatch } from "../seasonSystem";
+import { updateLeaderboardPositionTitles } from "../leaderboardPositionTitles";
 import { POPULATION_TIMES } from "../constants";
 
 interface GameStore {
@@ -40,6 +41,7 @@ interface GameStore {
   initializePlayer: () => void;
   updateUsername: (username: string) => void;
   equipTitle: (title: string | null) => void;
+  addTitle: (title: string) => void;
   
   // Queue actions
   setQueueType: (type: QueueType) => void;
@@ -93,6 +95,17 @@ export const useGameStore = create<GameStore>()(
       const updated = { ...playerData, equippedTitle: title };
       set({ playerData: updated });
       savePlayerData(updated);
+    },
+
+    addTitle: (title) => {
+      const { playerData } = get();
+      if (!playerData.titles.includes(title)) {
+        const updated = { ...playerData, titles: [...playerData.titles, title] };
+        // Update leaderboard position titles when player data changes
+        const withLeaderboardTitles = updateLeaderboardPositionTitles(updated);
+        set({ playerData: withLeaderboardTitles });
+        savePlayerData(withLeaderboardTitles);
+      }
     },
     
     // Queue management

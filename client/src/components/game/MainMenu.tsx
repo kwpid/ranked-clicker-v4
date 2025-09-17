@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGameStore } from "@/lib/stores/useGameStore";
 import { formatRank, getRankColor } from "@/lib/rankingSystem";
+import { SeasonInfo } from "./SeasonInfo";
 import { Settings, Trophy, BarChart3, Crown, Zap } from "lucide-react";
 
 export function MainMenu() {
@@ -56,6 +57,11 @@ export function MainMenu() {
             </div>
           </CardHeader>
         </Card>
+
+        {/* Season Information */}
+        <div className="mb-8">
+          <SeasonInfo />
+        </div>
 
         {/* Main Menu Buttons */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

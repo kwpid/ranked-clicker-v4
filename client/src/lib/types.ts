@@ -27,7 +27,7 @@ export type Rank =
 
 export type Division = "I" | "II" | "III" | "IV" | "V";
 
-export type TitleType = "XP" | "Ranked" | "Competitive" | "RCCS";
+export type TitleType = "XP" | "Ranked" | "Competitive" | "RCCS" | "Custom" | "Leaderboard";
 
 export interface PlayerData {
   username: string;

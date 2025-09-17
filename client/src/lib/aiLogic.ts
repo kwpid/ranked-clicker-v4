@@ -43,9 +43,9 @@ export const generateAIPlayers = (
     // Generate clicking stats based on MMR
     const clicksPerSecond = getClickingStatsFromMMR(mmr);
     
-    // Sometimes give AI a title
+    // AI uses titles more frequently
     let title: string | undefined;
-    if (Math.random() < 0.3) {
+    if (Math.random() < 0.75) { // Increased from 0.3 to 0.75
       title = generateAITitle(rank.rank, mmr);
     }
     
