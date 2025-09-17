@@ -1,12 +1,14 @@
 import { GameState, GameMode, QueueType, Team, AIPlayer, MatchResult } from "./types";
 import { generateAIPlayers, simulateAIClicking } from "./aiLogic";
 import { calculateEloChange, getKFactor } from "./mmrSystem";
+import { getLeaderboardAIOpponent } from "./leaderboardPositionTitles";
 import { GAME_SETTINGS } from "./constants";
 
 export const createGameState = (
   gameMode: GameMode,
   queueType: QueueType,
-  playerMMR: number
+  playerMMR: number,
+  useLeaderboardAI: boolean = false
 ): GameState => {
   const playerTeam: Team = Math.random() < 0.5 ? "red" : "blue";
   
@@ -18,7 +20,26 @@ export const createGameState = (
     case "3v3": aiCount = 5; break; // 2 teammates + 3 opponents
   }
   
-  const aiPlayers = generateAIPlayers(aiCount, playerMMR, gameMode, playerTeam);
+  // Generate AI players, potentially using leaderboard AI
+  let aiPlayers: AIPlayer[];
+  if (useLeaderboardAI && gameMode === "1v1") {
+    // For 1v1, replace the opponent with a leaderboard AI
+    const leaderboardOpponent = getLeaderboardAIOpponent(gameMode, playerMMR);
+    const opponentTeam = playerTeam === "red" ? "blue" : "red";
+    
+    aiPlayers = [{
+      id: "leaderboard_ai",
+      username: leaderboardOpponent.username,
+      mmr: leaderboardOpponent.mmr[gameMode],
+      rank: leaderboardOpponent.rank[gameMode],
+      title: leaderboardOpponent.title,
+      team: opponentTeam,
+      clicksPerSecond: Math.max(8, Math.min(20, leaderboardOpponent.mmr[gameMode] / 80)), // Higher MMR = better clicking
+      variance: 0.2 // Leaderboard AI has less variance
+    }];
+  } else {
+    aiPlayers = generateAIPlayers(aiCount, playerMMR, gameMode, playerTeam);
+  }
   
   return {
     gameMode,

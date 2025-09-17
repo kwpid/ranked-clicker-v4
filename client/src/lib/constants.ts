@@ -48,4 +48,8 @@ export const GAME_SETTINGS = {
 
 export const CURRENT_SEASON = 1;
 
+// Check if SeasonInfo is correctly imported and used
+export const SEASON_START_DATE = new Date(2025, 8, 1); // September 1, 2025
+export const SEASON_END_DATE = new Date(2025, 8, 30); // September 30, 2025
+
 export const RCCS_SEASON = 1;

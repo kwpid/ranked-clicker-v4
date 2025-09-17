@@ -1,16 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Trophy } from "lucide-react";
-import { CURRENT_SEASON } from "@/lib/constants";
+import { CURRENT_SEASON, SEASON_START_DATE, SEASON_END_DATE } from "@/lib/constants";
 
 export function SeasonInfo() {
-  // Calculate days remaining in current season (assuming 30-day seasons)
-  const seasonStartDate = new Date(2025, 8, 1); // September 1, 2025 (month is 0-indexed)
-  const seasonEndDate = new Date(2025, 8, 30); // September 30, 2025
+  // Calculate days remaining in current season
   const currentDate = new Date();
   
   const msPerDay = 24 * 60 * 60 * 1000;
-  const daysRemaining = Math.max(0, Math.ceil((seasonEndDate.getTime() - currentDate.getTime()) / msPerDay));
+  const daysRemaining = Math.max(0, Math.ceil((SEASON_END_DATE.getTime() - currentDate.getTime()) / msPerDay));
   
   return (
     <Card className="bg-gray-800 border-gray-700">

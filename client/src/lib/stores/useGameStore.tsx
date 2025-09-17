@@ -17,7 +17,7 @@ import {
 } from "../localStorage";
 import { createGameState, updateGameState, calculateMatchResult } from "../gameLogic";
 import { completeMatch } from "../seasonSystem";
-import { updateLeaderboardPositionTitles } from "../leaderboardPositionTitles";
+import { updateLeaderboardPositionTitles, shouldGetLeaderboardAI, getLeaderboardAIOpponent } from "../leaderboardPositionTitles";
 import { POPULATION_TIMES } from "../constants";
 
 interface GameStore {
@@ -80,7 +80,10 @@ export const useGameStore = create<GameStore>()(
     // Player management
     initializePlayer: () => {
       const data = loadPlayerData();
-      set({ playerData: data });
+      // Update leaderboard position titles on initialization
+      const withLeaderboardTitles = updateLeaderboardPositionTitles(data);
+      set({ playerData: withLeaderboardTitles });
+      savePlayerData(withLeaderboardTitles);
     },
     
     updateUsername: (username) => {
@@ -93,15 +96,17 @@ export const useGameStore = create<GameStore>()(
     equipTitle: (title) => {
       const { playerData } = get();
       const updated = { ...playerData, equippedTitle: title };
-      set({ playerData: updated });
-      savePlayerData(updated);
+      // Update leaderboard position titles when equipping titles
+      const withLeaderboardTitles = updateLeaderboardPositionTitles(updated);
+      set({ playerData: withLeaderboardTitles });
+      savePlayerData(withLeaderboardTitles);
     },
 
     addTitle: (title) => {
       const { playerData } = get();
       if (!playerData.titles.includes(title)) {
         const updated = { ...playerData, titles: [...playerData.titles, title] };
-        // Update leaderboard position titles when player data changes
+        // Update leaderboard position titles when adding new titles
         const withLeaderboardTitles = updateLeaderboardPositionTitles(updated);
         set({ playerData: withLeaderboardTitles });
         savePlayerData(withLeaderboardTitles);
@@ -181,7 +186,13 @@ export const useGameStore = create<GameStore>()(
         ? playerData.casualMMR 
         : playerData.rankedMMR[selectedGameMode];
       
-      const gameState = createGameState(selectedGameMode, selectedQueueType, playerMMR);
+      // Check for leaderboard AI opponents in ranked games
+      let useLeaderboardAI = false;
+      if (selectedQueueType === "ranked" && shouldGetLeaderboardAI(playerData, selectedGameMode)) {
+        useLeaderboardAI = true;
+      }
+      
+      const gameState = createGameState(selectedGameMode, selectedQueueType, playerMMR, useLeaderboardAI);
       
       set({
         gameState,
@@ -237,6 +248,8 @@ export const useGameStore = create<GameStore>()(
       // Update match completion (ranked only)
       if (selectedQueueType === "ranked") {
         updatedData = completeMatch(updatedData, selectedGameMode, result.won, result.newMMR);
+        // Update leaderboard position titles after MMR changes
+        updatedData = updateLeaderboardPositionTitles(updatedData);
       }
       
       // Save data

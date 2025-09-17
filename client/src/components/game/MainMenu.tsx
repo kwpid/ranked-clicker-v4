@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGameStore } from "@/lib/stores/useGameStore";
 import { formatRank, getRankColor } from "@/lib/rankingSystem";
+import { getTitleClasses } from "@/lib/titleDisplay";
 import { SeasonInfo } from "./SeasonInfo";
 import { Settings, Trophy, BarChart3, Crown, Zap } from "lucide-react";
 
@@ -42,7 +43,7 @@ export function MainMenu() {
               <div>
                 <CardTitle className="text-white flex items-center gap-2">
                   {playerData.equippedTitle && (
-                    <Badge variant="secondary" className="mr-2">
+                    <Badge variant="secondary" className={`mr-2 ${getTitleClasses(playerData.equippedTitle)}`}>
                       {playerData.equippedTitle}
                     </Badge>
                   )}

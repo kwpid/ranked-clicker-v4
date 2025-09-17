@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGameStore } from "@/lib/stores/useGameStore";
 import { getRankColor } from "@/lib/rankingSystem";
+import { getTitleClasses } from "@/lib/titleDisplay";
 import { ArrowLeft, Crown, Trophy, Star, CheckCircle } from "lucide-react";
 import { CURRENT_SEASON } from "@/lib/constants";
 
@@ -151,7 +152,7 @@ export function TitlesMenu() {
             {isEquipped && <CheckCircle className="w-5 h-5 text-blue-400" />}
           </div>
           
-          <h3 className={`text-lg font-bold mb-1 ${title.color} ${title.glow ? "drop-shadow-[0_0_8px_rgba(255,215,0,0.8)]" : ""}`}>
+          <h3 className={getTitleClasses(title.name, `text-lg font-bold mb-1 ${title.color}`)}>
             {title.name}
           </h3>
           

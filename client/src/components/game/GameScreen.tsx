@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useGameStore } from "@/lib/stores/useGameStore";
 import { getPlayerTeamScore, getOpponentTeamScore } from "@/lib/gameLogic";
 import { formatRank, getRankColor } from "@/lib/rankingSystem";
+import { getTitleDisplayClasses } from "@/lib/titleDisplay";
 import { useAudio } from "@/lib/stores/useAudio";
 
 export function GameScreen() {
@@ -156,14 +157,7 @@ export function GameScreen() {
                         <span className="text-red-300">{player.mmr}</span>
                       </div>
                       {player.title && (
-                        <div className={`text-xs mt-1 ${
-                          player.title.includes('RCCS') ? 'title-glow-aqua' :
-                          player.title.includes('ELITE') ? 'title-glow-golden' :
-                          player.title.includes('GRAND CHAMPION') ? 'title-glow-golden' :
-                          player.title.startsWith('RANKED #') ? 'title-glow-rainbow' :
-                          player.title === 'LEGEND' ? 'title-glow-legend' :
-                          'text-red-400'
-                        }`}>
+                        <div className={getTitleDisplayClasses(player.title, 'red')}>
                           {player.title}
                         </div>
                       )}
@@ -176,14 +170,7 @@ export function GameScreen() {
                         <span className="text-red-100">{gameState.playerClicks} clicks</span>
                       </div>
                       {playerData.equippedTitle && (
-                        <div className={`text-xs mt-1 ${
-                          playerData.equippedTitle.includes('RCCS') ? 'title-glow-aqua' :
-                          playerData.equippedTitle.includes('ELITE') ? 'title-glow-golden' :
-                          playerData.equippedTitle.includes('GRAND CHAMPION') ? 'title-glow-golden' :
-                          playerData.equippedTitle.startsWith('RANKED #') ? 'title-glow-rainbow' :
-                          playerData.equippedTitle === 'LEGEND' ? 'title-glow-legend' :
-                          'text-red-300'
-                        }`}>
+                        <div className={getTitleDisplayClasses(playerData.equippedTitle, 'red')}>
                           {playerData.equippedTitle}
                         </div>
                       )}
@@ -211,14 +198,7 @@ export function GameScreen() {
                         <span className="text-blue-300">{player.mmr}</span>
                       </div>
                       {player.title && (
-                        <div className={`text-xs mt-1 ${
-                          player.title.includes('RCCS') ? 'title-glow-aqua' :
-                          player.title.includes('ELITE') ? 'title-glow-golden' :
-                          player.title.includes('GRAND CHAMPION') ? 'title-glow-golden' :
-                          player.title.startsWith('RANKED #') ? 'title-glow-rainbow' :
-                          player.title === 'LEGEND' ? 'title-glow-legend' :
-                          'text-blue-400'
-                        }`}>
+                        <div className={getTitleDisplayClasses(player.title, 'blue')}>
                           {player.title}
                         </div>
                       )}
@@ -231,12 +211,7 @@ export function GameScreen() {
                         <span className="text-blue-100">{gameState.playerClicks} clicks</span>
                       </div>
                       {playerData.equippedTitle && (
-                        <div className={`text-xs mt-1 ${
-                          playerData.equippedTitle.includes('RCCS') ? 'title-glow-aqua' :
-                          playerData.equippedTitle.includes('ELITE') ? 'title-glow-golden' :
-                          playerData.equippedTitle === 'LEGEND' ? 'title-glow-legend' :
-                          'text-blue-300'
-                        }`}>
+                        <div className={getTitleDisplayClasses(playerData.equippedTitle, 'blue')}>
                           {playerData.equippedTitle}
                         </div>
                       )}
