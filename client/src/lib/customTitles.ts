@@ -24,6 +24,36 @@ export const CUSTOM_TITLES: CustomTitle[] = [
     owned: false
   },
   {
+    id: "rccs_s1_regional_finalist",
+    name: "RCCS S1 REGIONAL FINALIST",
+    type: "Custom",
+    description: "Finish top 6 in a RCCS Regional",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false
+  },
+  {
+    id: "rccs_s1_regional_champion",
+    name: "RCCS S1 REGIONAL CHAMPION",
+    type: "Custom",
+    description: "Finish top 1 in a RCCS Regional",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false
+  },
+  {
+    id: "rccs_s1_regional_finalist",
+    name: "RCCS S1 REGIONAL FINALIST",
+    type: "Custom",
+    description: "Finish top 6 in a RCCS Regional",
+    color: "text-cyan-400",
+    glow: "title-glow-aqua",
+    unlocked: true,
+    owned: false
+  },
+  {
     id: "rccs_s1_champion",
     name: "RCCS S1 CHAMPION",
     type: "Custom", 
